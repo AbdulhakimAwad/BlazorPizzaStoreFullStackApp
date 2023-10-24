@@ -1,0 +1,33 @@
+﻿@using LearnBlazor.Client.Services.PizzaService;
+@inject IPizzaService PizzaService
+<h3>PizzaList</h3>
+@if (PizzaService._pizzas.Count==0)
+{
+    <h1>Loading....</h1>
+}else{
+<ul class="list-unstyled">
+    @foreach (var pizza in PizzaService._pizzas)
+    {
+        <li class="media my-3">
+            <div class="media-img-wrapper mr-2">
+                <a href="">
+                    <img class="media-img" src="@pizza.ImgUrl" asp-append-version="true" />
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="">
+                    <h4 class="mb-0">@pizza.PizzaName</h4>
+                </a>
+                <p>Description</p>
+                <h5 class="price">$@pizza.Price</h5>
+            </div>
+        </li>
+    }
+</ul>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await PizzaService.GetPizzasAsync();
+    }
+}
